@@ -4,7 +4,10 @@ import "./globals.css";
 import { ThemeProvider } from "components/material-tailwind-theme-provider";
 import ReactQueryClientProviders from "config/ReactQueryClientProvider";
 import RecoilProvider from "config/RecoilProvider";
+import MainLayout from "components/layouts/main-layout";
+import Auth from "components/auth";
 import { createServerSupabaseClient } from "utils/supabase/server";
+import AuthProvider from "config/auth-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,7 +39,11 @@ export default async function RootLayout({ children }) {
                 referrerPolicy="no-referrer"
               />
             </head>
-            <body className={inter.className}>{children}</body>
+            <AuthProvider accessToken={session?.access_token}>
+              <body className={inter.className}>
+                {session?.user ? <MainLayout>{children}</MainLayout> : <Auth />}
+              </body>
+            </AuthProvider>
           </html>
         </ThemeProvider>
       </ReactQueryClientProviders>

@@ -9,22 +9,9 @@ export default function SignUp({ setView }) {
   const [otp, setOtp] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmationRequired, setConfirmationRequired] = useState(false);
+  const [confirmationRequired, setConfirmationRequird] = useState(false);
 
   const supabase = createBrowserSupabaseClient();
-  // signup mutation
-
-  const signInWithKakao = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "kakao",
-      options: {
-        redirectTo: process.env.NEXT_PUBLIC_VERCEL_URL
-          ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/auth/callback`
-          : "http://localhost:3000/auth/callback",
-      },
-    });
-    console.log(data);
-  };
 
   const signupMutation = useMutation({
     mutationFn: async () => {
@@ -32,12 +19,12 @@ export default function SignUp({ setView }) {
         email,
         password,
         options: {
-          emailRedirectTo: "http://localhost:3000/signup/confirm",
+          emailRedirectTo: "httl://localhost:3000/signup/confirm",
         },
       });
 
       if (data) {
-        setConfirmationRequired(true);
+        setConfirmationRequird(true);
       }
 
       if (error) {
@@ -55,6 +42,7 @@ export default function SignUp({ setView }) {
       });
 
       if (data) {
+        // setConfirmationRequird(true);
         console.log(data);
       }
 
@@ -116,16 +104,10 @@ export default function SignUp({ setView }) {
           color="light-blue"
           className="w-full text-md py-1"
         >
+          {/* {confirmationRequired ? "메일함을 확인해주세요" : "가입하기"} */}
           {confirmationRequired ? "인증하기" : "가입하기"}
         </Button>
-        <Button
-          onClick={() => signInWithKakao()}
-          className="w-full text-md py-1 bg-yellow-700"
-        >
-          카카오 로그인
-        </Button>
       </div>
-
       <div className="py-4 w-full text-center max-w-lg border border-gray-400 bg-white">
         이미 계정이 있으신가요?{" "}
         <button
