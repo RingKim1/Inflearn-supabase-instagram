@@ -4,10 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "components/material-tailwind-theme-provider";
 import ReactQueryClientProviders from "config/ReactQueryClientProvider";
 import RecoilProvider from "config/RecoilProvider";
-import MainLayout from "components/layouts/main-layout";
-import Auth from "components/auth";
 import { createServerSupabaseClient } from "utils/supabase/server";
-import AuthProvider from "config/auth-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
